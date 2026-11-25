@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calcolo Ore Lavorative</title>
+  <link rel="stylesheet" href="calcolo ore lavorative.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Calcolo Ore Lavorative</h1>
+    
+    <form id="workForm">
+      <input type="hidden" id="editIndex" value="-1">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="startDate">Data e Ora Inizio</label>
+          <input type="datetime-local" id="startDate" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="endDate">Data e Ora Fine</label>
+          <input type="datetime-local" id="endDate" required>
+        </div>
+
+        <div class="form-group">
+          <label for="hourlyRate">Paga Oraria (€)</label>
+          <input type="number" id="hourlyRate" step="0.01" min="0" placeholder="es. 10.00" required>
+        </div>
+
+        <div class="form-group">
+          <label for="city">Città (Provincia)</label>
+          <input type="text" id="city" placeholder="es. Milano (MI)" required>
+        </div>
+
+        <div class="form-group">
+          <label for="street">Via / Indirizzo</label>
+          <input type="text" id="street" placeholder="es. Via Roma 10" required>
+        </div>
+
+        <div class="form-group">
+          <label for="location">Location / Sede</label>
+          <input type="text" id="location" placeholder="es. Ristorante / Ufficio A" required>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="submit" id="submitBtn" class="btn btn-primary">Aggiungi Turno</button>
+        <button type="button" id="exportBtn" class="btn btn-secondary">Esporta JSON</button>
+        <button type="button" id="importBtn" class="btn btn-secondary">Importa JSON</button>
+        <input type="file" id="fileInput" accept=".json" style="display: none;">
+      </div>
+    </form>
+
+    <h2>Filtri di Ricerca</h2>
+    <div class="filters-grid">
+      <div class="form-group">
+        <label for="filterStatus">Stato Pagamento</label>
+        <select id="filterStatus" class="filter-input">
+          <option value="all">Tutti</option>
+          <option value="unpaid">Da pagare</option>
+          <option value="paid">Pagato</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="filterLocation">Sede / Città</label>
+        <select id="filterLocation" class="filter-input">
+          <option value="all">Tutte le sedi</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="filterPeriod">Periodo</label>
+        <select id="filterPeriod" class="filter-input">
+          <option value="all">Tutti</option>
+          <option value="week">Questa settimana</option>
+          <option value="month">Questo mese</option>
+          <option value="year">Quest'anno</option>
+          <option value="custom">Personalizzato</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Selettori per periodo personalizzato -->
+    <div id="customDateContainer" class="form-grid" style="display: none; margin-bottom: 20px;">
+      <div class="form-group">
+        <label for="customStart">Dal giorno</label>
+        <input type="date" id="customStart" class="filter-input">
+      </div>
+      <div class="form-group">
+        <label for="customEnd">Al giorno</label>
+        <input type="date" id="customEnd" class="filter-input">
+      </div>
+    </div>
+
+    <div class="earnings-box">
+      <h3>Soldi Fatti: <span id="totalEarnings">€ 0.00</span></h3>
+    </div>
+
+    <h2>Riepilogo Turni</h2>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Inizio</th>
+            <th>Fine</th>
+            <th>Ore Totali</th>
+            <th>Paga/h</th>
+            <th>Totale Guadagnato</th>
+            <th>Sede (Città, Via, Location)</th>
+            <th>Stato Pagamento</th>
+            <th>Azioni</th>
+          </tr>
+        </thead>
+        <tbody id="workTableBody">
+          <!-- I dati verranno inseriti qui -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="calcolo ore lavorative.js"></script>
+</body>
+</html>
